@@ -3,11 +3,14 @@ package com.cmdotenter.VetCare.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
 @Table(name = "Appointment")
 public class Appointment {
 

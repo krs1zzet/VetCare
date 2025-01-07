@@ -1,9 +1,9 @@
 package com.cmdotenter.VetCare.service;
 
+import java.util.List;
+
 import com.cmdotenter.VetCare.dto.request.BaseProductRequest;
 import com.cmdotenter.VetCare.entity.Product;
-
-import java.util.List;
 
 public interface ProductService {
     void save(BaseProductRequest request);

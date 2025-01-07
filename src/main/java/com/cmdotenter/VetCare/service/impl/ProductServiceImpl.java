@@ -28,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setStock(request.getStock());
         product.setPrice(request.getPrice());
+        productRepository.save(product);
     }
 
     @Override
