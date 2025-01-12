@@ -27,6 +27,13 @@ public class PetController {
         return ResponseEntity.ok(petDTOList);
     }
 
+    @GetMapping("/pets/{id}")
+    public ResponseEntity<List<Pet>> findAllPetsByUserId(@PathVariable Long id){
+        List<Pet> pet = petService.findAllPetsByUserId(id);
+        log.info("Find all pets by user id");
+        return ResponseEntity.ok(pet);
+    }
+
     @PostMapping("/pets")
     public ResponseEntity<Void> createPet(@RequestBody BasePetRequest request){
         petService.save(request);
@@ -37,6 +44,13 @@ public class PetController {
     public ResponseEntity<Void> deletePet(@PathVariable Long id){
         petService.deleteById(id);
         log.info("Pet deleted");
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/pets/{id}")
+    public ResponseEntity<Void> updatePet(@PathVariable Long id, @RequestBody BasePetRequest request){
+        petService.update(id, request);
+        log.info("Pet updated");
         return ResponseEntity.ok().build();
     }
 }

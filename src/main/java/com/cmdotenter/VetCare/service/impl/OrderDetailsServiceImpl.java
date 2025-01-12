@@ -55,4 +55,31 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         orderDetailsRepository.deleteById(theOrderDetails.getId());
 
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseOrderDetailsRequest request) {
+        Optional<OrderDetails> orderDetails = orderDetailsRepository.findById(id);
+        OrderDetails theOrderDetails = orderDetails.orElseThrow(() -> new RuntimeException("Did not find orderDetails id - " + id));
+        theOrderDetails.setOrder(orderService.findById(request.getOrderId()));
+        theOrderDetails.setProduct(productService.findById(request.getProductId()));
+        theOrderDetails.setPrice(request.getPrice());
+        theOrderDetails.setQuantity(request.getQuantity());
+        orderDetailsRepository.save(theOrderDetails);
+    }
+
+    @Override
+    public List<OrderDetails> findAllByOrderId(Long orderId) {
+        return orderDetailsRepository.findAllByOrderId(orderId);
+    }
+
+    @Override
+    public void deleteAll() {
+        orderDetailsRepository.deleteAll();
+
+    }
+
+
+
+
 }

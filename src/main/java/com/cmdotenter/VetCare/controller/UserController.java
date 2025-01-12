@@ -2,14 +2,9 @@ package com.cmdotenter.VetCare.controller;
 
 import java.util.List;
 
+import com.cmdotenter.VetCare.dto.request.LoginRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cmdotenter.VetCare.dto.request.BaseUserRequest;
 import com.cmdotenter.VetCare.entity.User;
@@ -47,4 +42,18 @@ public class UserController {
         log.info("User deleted");
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody BaseUserRequest request){
+        userService.update(id, request);
+        log.info("User updated");
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody LoginRequest request){
+        User user = userService.login(request);
+        log.info("User logged in");
+        return ResponseEntity.ok(user);
+    }
+
 }

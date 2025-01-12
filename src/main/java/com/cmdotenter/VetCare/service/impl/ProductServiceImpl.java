@@ -49,4 +49,15 @@ public class ProductServiceImpl implements ProductService {
         Product theProduct = product.orElseThrow(() -> new RuntimeException("Did not find product id - " + id));
         productRepository.deleteById(theProduct.getId());
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseProductRequest request) {
+        Optional<Product> product = productRepository.findById(id);
+        Product theProduct = product.orElseThrow(() -> new RuntimeException("Did not find product id - " + id));
+        theProduct.setName(request.getName());
+        theProduct.setDescription(request.getDescription());
+        theProduct.setStock(request.getStock());
+        theProduct.setPrice(request.getPrice());
+    }
 }

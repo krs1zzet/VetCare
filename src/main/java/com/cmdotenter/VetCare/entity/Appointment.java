@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
-@Table(name = "Appointment")
+@Table(name = "Appointments")
 public class Appointment {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "appointment_id_seq")

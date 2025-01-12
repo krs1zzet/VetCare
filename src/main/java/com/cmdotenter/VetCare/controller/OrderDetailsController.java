@@ -39,4 +39,24 @@ public class OrderDetailsController {
         log.info("Order details deleted");
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/order-details/{id}")
+    public ResponseEntity<Void> updateOrderDetails(@PathVariable Long id, @RequestBody BaseOrderDetailsRequest request){
+        orderDetailsService.update(id, request);
+        log.info("Order details updated");
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/order-details/order/{id}")
+    public ResponseEntity<List<OrderDetails>> findByOrderId(@PathVariable Long id){
+        List<OrderDetails> orderDetails = orderDetailsService.findAllByOrderId(id);
+        log.info("Find order details by id");
+        return ResponseEntity.ok(orderDetails);
+    }
+    @DeleteMapping("/order-details")
+    public ResponseEntity<Void> deleteAll(){
+        orderDetailsService.deleteAll();
+        log.info("All order details deleted");
+        return ResponseEntity.ok().build();
+    }
 } 

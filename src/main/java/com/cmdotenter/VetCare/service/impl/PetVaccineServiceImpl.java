@@ -6,6 +6,7 @@ import com.cmdotenter.VetCare.repository.PetVaccineRepository;
 import com.cmdotenter.VetCare.service.PetService;
 import com.cmdotenter.VetCare.service.PetVaccineService;
 import com.cmdotenter.VetCare.service.VaccineService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class PetVaccineServiceImpl implements PetVaccineService {
         this.vaccineService = vaccineService;
     }
 
+    @Transactional
     @Override
     public void save(BasePetVaccineRequest request) {
         PetVaccine petVaccine = new PetVaccine();
@@ -31,9 +33,11 @@ public class PetVaccineServiceImpl implements PetVaccineService {
         petVaccine.setPet(petService.findById(request.getPetId()));
         petVaccine.setVaccine(vaccineService.findById(request.getVaccineId()));
         petVaccine.setNextDate(request.getNextDate());
+        petVaccineRepository.save(petVaccine);
 
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Optional<PetVaccine> petVaccine = petVaccineRepository.findById(id);
@@ -51,4 +55,28 @@ public class PetVaccineServiceImpl implements PetVaccineService {
     public List<PetVaccine> findAll() {
         return petVaccineRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public void update(Long id, BasePetVaccineRequest request) {
+        Optional<PetVaccine> petVaccine = petVaccineRepository.findById(id);
+        PetVaccine thePetVaccine = petVaccine.orElseThrow(() -> new RuntimeException("Did not find product id - " + id));
+        thePetVaccine.setDate(request.getDate());
+        thePetVaccine.setCount(request.getCount());
+        thePetVaccine.setPet(petService.findById(request.getPetId()));
+        thePetVaccine.setVaccine(vaccineService.findById(request.getVaccineId()));
+        thePetVaccine.setNextDate(request.getNextDate());
+    }
+
+    @Override
+    @Transactional
+    public void updateCount(Long id) {
+        Optional<PetVaccine> petVaccine = petVaccineRepository.findById(id);
+        PetVaccine thePetVaccine = petVaccine.orElseThrow(() -> new RuntimeException("Did not find product id - " + id));
+        thePetVaccine.setCount(thePetVaccine.getCount() + 1);
+        thePetVaccine.setDate(thePetVaccine.getNextDate());
+        thePetVaccine.setNextDate(thePetVaccine.getNextDate().plusDays(thePetVaccine.getVaccine().getPeriodDay()));
+    }
+
+
 }

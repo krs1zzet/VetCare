@@ -49,4 +49,24 @@ public class VaccineServiceImpl implements VaccineService {
     public List<Vaccine> findAll() {
         return vaccineRepository.findAll();
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseVaccineRequest request) {
+        Optional<Vaccine> vaccine = vaccineRepository.findById(id);
+        Vaccine theVaccine = vaccine.orElseThrow(() -> new RuntimeException("Did not find product id - " + id));
+        theVaccine.setDescription(request.getDescription());
+        theVaccine.setName(request.getName());
+        theVaccine.setCount(request.getCount());
+        theVaccine.setPeriodDay(request.getPeriodDay());
+    }
+
+    @Override
+    public Vaccine findVaccineByPetVaccineId(Long id) {
+        Vaccine vaccine = vaccineRepository.findVaccineByPetVaccinesId(id);
+        if (vaccine == null) {
+            throw new RuntimeException("Did not find vaccine by pet vaccine id - " + id);
+        }
+        return vaccine;
+    }
 }

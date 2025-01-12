@@ -5,6 +5,7 @@ import com.cmdotenter.VetCare.entity.Schedule;
 import com.cmdotenter.VetCare.repository.ScheduleRepository;
 import com.cmdotenter.VetCare.service.ClinicService;
 import com.cmdotenter.VetCare.service.ScheduleService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +47,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> findAll() {
         return scheduleRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void update(Long id, BaseScheduleRequest request) {
+        Optional<Schedule> schedule = scheduleRepository.findById(id);
+        Schedule theSchedule = schedule.orElseThrow(() -> new RuntimeException("Did not find schedule id - " + id));
+        theSchedule.setClinic(clinicService.findById(request.getClinicId()));
+        theSchedule.setIsAvailable(request.getIsAvailable());
+        theSchedule.setDate(request.getDate());
     }
 }

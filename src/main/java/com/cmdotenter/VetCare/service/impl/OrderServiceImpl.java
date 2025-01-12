@@ -51,4 +51,25 @@ public class OrderServiceImpl implements OrderService {
         Order theOrder = order.orElseThrow(() -> new RuntimeException("Did not find order id - " + id));
         orderRepository.deleteById(theOrder.getId());
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseOrderRequest request) {
+        Optional<Order> order = orderRepository.findById(id);
+        Order theOrder = order.orElseThrow(() -> new RuntimeException("Did not find order id - " + id));
+        theOrder.setDate(request.getDate());
+        theOrder.setUser(userService.findById(request.getUserId()));
+        theOrder.setTotalPrice(request.getTotalPrice());
+        orderRepository.save(theOrder);
+    }
+
+    @Override
+    public List<Order> findAllByUserId(Long userId) {
+        return orderRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Order findLatestOrder(Long userId) {
+        return orderRepository.findTopByUserIdOrderByIdDesc(userId);
+    }
 }

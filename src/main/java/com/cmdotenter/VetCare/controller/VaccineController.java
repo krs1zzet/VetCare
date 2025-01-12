@@ -39,4 +39,25 @@ public class VaccineController {
         log.info("Vaccine deleted");
         return ResponseEntity.ok().build();
     }
-} 
+
+    @PutMapping("/vaccines/{id}")
+    public ResponseEntity<Void> updateVaccine(@PathVariable Long id, @RequestBody BaseVaccineRequest request){
+        vaccineService.update(id, request);
+        log.info("Vaccine updated");
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/vaccines/{id}")
+    public ResponseEntity<Vaccine> findById(@PathVariable Long id){
+        Vaccine vaccine = vaccineService.findById(id);
+        log.info("Find vaccine by id");
+        return ResponseEntity.ok(vaccine);
+    }
+    @PostMapping("/vaccines-petVaccines/{id}")
+    public ResponseEntity<Vaccine> findVaccinesByPetVaccineId(@PathVariable Long id){
+        Vaccine vaccines = vaccineService.findVaccineByPetVaccineId(id);
+        log.info("Find all vaccines by pet vaccine id");
+        return ResponseEntity.ok(vaccines);
+    }
+
+}

@@ -55,4 +55,24 @@ public class PetServiceImpl implements PetService {
         petRepository.deleteById(thePet.getId());
 
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BasePetRequest request) {
+        Optional<Pet> pet = petRepository.findById(id);
+        Pet thePet = pet.orElseThrow(() -> new RuntimeException("Did not find pet id - " + id));
+        thePet.setName(request.getName());
+        thePet.setAge(request.getAge());
+        thePet.setAllergies(request.getAllergies());
+        thePet.setHeight(request.getHeight());
+        thePet.setWeight(request.getWeight());
+        thePet.setIsSterile(request.getIsSterile());
+        thePet.setSpecies(request.getSpecies());
+        petRepository.save(thePet);
+    }
+
+    @Override
+    public List<Pet> findAllPetsByUserId(Long id) {
+        return petRepository.findAllByUserId(id);
+    }
 }

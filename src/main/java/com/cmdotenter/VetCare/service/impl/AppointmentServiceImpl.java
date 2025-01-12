@@ -2,6 +2,8 @@ package com.cmdotenter.VetCare.service.impl;
 
 import com.cmdotenter.VetCare.dto.request.BaseAppointmentRequest;
 import com.cmdotenter.VetCare.entity.Appointment;
+import com.cmdotenter.VetCare.entity.Clinic;
+import com.cmdotenter.VetCare.entity.Pet;
 import com.cmdotenter.VetCare.repository.AppointmentRepository;
 import com.cmdotenter.VetCare.repository.ClinicRepository;
 import com.cmdotenter.VetCare.service.AppointmentService;
@@ -57,5 +59,35 @@ public class AppointmentServiceImpl implements AppointmentService {
         Optional<Appointment> appointment = appointmentRepository.findById(id);
         Appointment theAppointment = appointment.orElseThrow(() -> new RuntimeException("Did not find appointment id - " + id));
         appointmentRepository.deleteById(theAppointment.getId());
+    }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseAppointmentRequest request) {
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        Appointment theAppointment = appointment.orElseThrow(() -> new RuntimeException("Did not find appointment id - " + id));
+        theAppointment.setDate(request.getDate());
+        theAppointment.setClinic(clinicService.findById(request.getClinicId()));
+        theAppointment.setUser(userService.findById(request.getUserId()));
+        theAppointment.setPet(petService.findById(request.getPetId()));
+        appointmentRepository.save(theAppointment);
+    }
+
+    @Override
+    public Pet getPetByAppointmentId(Long id) {
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        Appointment theAppointment = appointment.orElseThrow(() -> new RuntimeException("Did not find appointment id - " + id));
+        return theAppointment.getPet();
+    }
+
+    @Override
+    public Clinic getClinicByAppointmentId(Long id) {
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        Appointment theAppointment = appointment.orElseThrow(() -> new RuntimeException("Did not find appointment id - " + id));
+        return theAppointment.getClinic();
+    }
+    @Override
+    public List<Appointment> findByUserId(Long userId) {
+        return appointmentRepository.findByUserId(userId);
     }
 }

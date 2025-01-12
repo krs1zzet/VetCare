@@ -1,5 +1,6 @@
 package com.cmdotenter.VetCare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.type.descriptor.jdbc.SmallIntJdbcType;
 
@@ -31,7 +32,7 @@ public class Pet {
 
     private Boolean isSterile;
 
-    @Column(length = 50)
+    @Column(length = 250)
     private String allergies;
 
     @ManyToOne
@@ -39,10 +40,12 @@ public class Pet {
     private User user;
 
 
-    @OneToMany(mappedBy = "pet")
+    @OneToMany(mappedBy = "pet",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     List<PetVaccine> petVaccines;
 
-    @OneToMany(mappedBy = "pet")
+    @OneToMany(mappedBy = "pet",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     List<Appointment> Appointments;
 
 

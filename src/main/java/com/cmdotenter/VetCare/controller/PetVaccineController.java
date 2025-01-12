@@ -39,4 +39,20 @@ public class PetVaccineController {
         log.info("Pet vaccine deleted");
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/pet-vaccines/{id}")
+    public ResponseEntity<Void> updatePetVaccine(@PathVariable Long id, @RequestBody BasePetVaccineRequest request){
+        petVaccineService.update(id, request);
+        log.info("Pet vaccine updated");
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/pet-vaccines-update-count/{id}")
+    public ResponseEntity<Void> updatePetVaccineCount(@PathVariable Long id){
+        petVaccineService.updateCount(id);
+        log.info("Pet vaccine count updated");
+        return ResponseEntity.ok().build();
+    }
+
+
 } 

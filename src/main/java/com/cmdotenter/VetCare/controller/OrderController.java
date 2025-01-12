@@ -39,4 +39,25 @@ public class OrderController {
         log.info("Order deleted");
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/orders/{id}")
+    public ResponseEntity<Void> updateOrder(@PathVariable Long id, @RequestBody BaseOrderRequest request){
+        orderService.update(id, request);
+        log.info("Order updated");
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/orders/user/{userId}")
+    public ResponseEntity<List<Order>> findAllByUserId(@PathVariable Long userId){
+        List<Order> orders = orderService.findAllByUserId(userId);
+        log.info("Find all orders by user id");
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/orders/latest/{userId}")
+    public ResponseEntity<Order> findLatestOrder(@PathVariable Long userId){
+        Order order = orderService.findLatestOrder(userId);
+        log.info("Find latest order by user id");
+        return ResponseEntity.ok(order);
+    }
 } 

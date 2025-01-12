@@ -1,5 +1,6 @@
 package com.cmdotenter.VetCare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -28,12 +29,15 @@ public class User {
     private Short age;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<Pet> pets;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<Order> orders;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<Appointment> appointments;
 
 

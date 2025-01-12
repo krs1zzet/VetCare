@@ -11,7 +11,8 @@ public interface PetService {
     Pet findById(Long id);
     List<Pet> findAll();
     void deleteById(Long id);
-
+    List<Pet> findAllPetsByUserId(Long id);
+    void update(Long id, BasePetRequest request);
 }
 
 

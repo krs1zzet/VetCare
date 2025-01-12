@@ -1,5 +1,6 @@
 package com.cmdotenter.VetCare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Vaccine {
     private Integer periodDay;
 
     @OneToMany(mappedBy = "vaccine")
+    @JsonIgnore
     private List<PetVaccine> petVaccines;
 
 

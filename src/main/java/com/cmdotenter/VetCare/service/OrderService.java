@@ -10,4 +10,7 @@ public interface OrderService {
     Order findById(Long id);
     List<Order> findAll();
     void deleteById(Long id);
+    void update(Long id, BaseOrderRequest request);
+    List<Order> findAllByUserId(Long userId);
+    Order findLatestOrder(Long userId);
 }

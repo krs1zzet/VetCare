@@ -11,4 +11,6 @@ public interface VaccineService {
     void deleteById(Long id);
     Vaccine findById(Long id);
     List<Vaccine> findAll();
+    void update(Long id, BaseVaccineRequest request);
+    Vaccine findVaccineByPetVaccineId(Long id);
 }

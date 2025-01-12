@@ -13,5 +13,6 @@ public interface ClinicService {
     Clinic findById(Long id);
     List<Clinic> findAll();
     void deleteById(Long id);
+    void update(Long id, BaseClinicRequest request);
 
 }

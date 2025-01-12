@@ -39,4 +39,11 @@ public class ClinicController {
         log.info("Clinic deleted");
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/clinics/{id}")
+    public ResponseEntity<Void> updateClinic(@PathVariable Long id, @RequestBody BaseClinicRequest request){
+        clinicService.update(id, request);
+        log.info("Clinic updated");
+        return ResponseEntity.ok().build();
+    }
 } 

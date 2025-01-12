@@ -46,4 +46,15 @@ public class ClinicServiceImpl implements ClinicService {
         Clinic theClinic = clinic.orElseThrow(() -> new RuntimeException("Did not find clinic id - " + id));
         clinicRepository.deleteById(theClinic.getId());
     }
+
+    @Transactional
+    @Override
+    public void update(Long id, BaseClinicRequest request) {
+        Optional<Clinic> clinic = clinicRepository.findById(id);
+        Clinic theClinic = clinic.orElseThrow(() -> new RuntimeException("Did not find clinic id - " + id));
+        theClinic.setName(request.getName());
+        theClinic.setLocation(request.getLocation());
+        theClinic.setPhone(request.getNumber());
+        clinicRepository.save(theClinic);
+    }
 }

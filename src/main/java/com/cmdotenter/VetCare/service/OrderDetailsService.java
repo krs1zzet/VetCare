@@ -10,6 +10,9 @@ public interface OrderDetailsService {
     OrderDetails findById(Long id);
     List<OrderDetails> findAll();
     void deleteById(Long id);
+    void update(Long id, BaseOrderDetailsRequest request);
+    List<OrderDetails> findAllByOrderId(Long orderId);
+    void deleteAll();
 
 
 }

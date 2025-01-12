@@ -10,4 +10,5 @@ public interface ScheduleService {
     void deleteById(Long id);
     Schedule findById(Long id);
     List<Schedule> findAll();
+    void update(Long id, BaseScheduleRequest request);
 }
