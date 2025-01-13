@@ -54,5 +54,12 @@ public class PetVaccineController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/pet-vaccines/view")
+    public ResponseEntity<List<PetVaccine>> findAllPetVaccinesByPetId(){
+        List<PetVaccine> petVaccines = petVaccineService.getAllPetVaccinationDetails();
+        log.info("Find all pet vaccines by pet id");
+        return ResponseEntity.ok(petVaccines);
+    }
+
 
 } 

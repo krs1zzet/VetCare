@@ -11,13 +11,12 @@ import java.util.List;
 @Repository
 
 public interface PetVaccineRepository extends JpaRepository<PetVaccine, Long> {
-    @Query(value = "(SELECT * FROM pet_vaccines WHERE pet_id = :petId1) " +
-            "UNION " +
-            "(SELECT * FROM pet_vaccines WHERE pet_id = :petId2)", nativeQuery = true)
-    List<PetVaccine> findUnionByPetIds(@Param("petId1") Long petId1, @Param("petId2") Long petId2);
 
-    @Query(value = "SELECT * FROM pet_vaccine", nativeQuery = true)
-    List<PetVaccine> findAllPetVaccineViews();
+    @Query(value = "SELECT * FROM public.pet_vaccine_view", nativeQuery = true)
+    List<Object[]> findAllFromPetVaccineView();
+
+    @Query(value = "SELECT vaccine_description, vaccine_date, next_date FROM getvaccinationdetails(:petId)", nativeQuery = true)
+    List<Object[]> findVaccinationDetailsByPetId(@Param("petId") Integer petId);
 
 
 }

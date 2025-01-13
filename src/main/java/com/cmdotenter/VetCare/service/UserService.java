@@ -13,4 +13,5 @@ public interface UserService {
     List<User> findAll();
     void update(Long id, BaseUserRequest request);
     User login(LoginRequest request);
+    User findUserByPetId(Long petId);
 }

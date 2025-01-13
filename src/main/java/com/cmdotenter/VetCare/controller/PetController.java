@@ -2,6 +2,7 @@ package com.cmdotenter.VetCare.controller;
 
 import com.cmdotenter.VetCare.dto.request.BasePetRequest;
 import com.cmdotenter.VetCare.entity.Pet;
+import com.cmdotenter.VetCare.entity.PetVaccine;
 import com.cmdotenter.VetCare.service.PetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,39 @@ public class PetController {
         petService.update(id, request);
         log.info("Pet updated");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/pets/species/{species}")
+    public ResponseEntity<List<Pet>> findAllBySpecies(@PathVariable String species){
+        List<Pet> pets = petService.getPetsBySpecies(species);
+        log.info("Find all pets by species");
+        return ResponseEntity.ok(pets);
+    }
+
+    @PostMapping("/pets/calculate-weight/{id}")
+    public ResponseEntity<Double> calculateWeight(@PathVariable Long id){
+        Double weight = petService.calculateTotalWeight(id.intValue());
+        log.info("Weight calculated");
+        return ResponseEntity.ok(weight);
+    }
+    @PostMapping("/pets/vaccination-details/{id}")
+    public ResponseEntity<List<PetVaccine>> getVaccinationDetailsByPetId(@PathVariable Long id){
+        List<PetVaccine> vaccination = petService.getVaccinationDetailsByPetId(id.intValue());
+        log.info("Vaccination details found by pet id");
+        return ResponseEntity.ok(vaccination);
+    }
+
+    @GetMapping("/pets/species-count")
+    public ResponseEntity<List<String>> getSpeciesCount(){
+        List<String> speciesName = petService.findSpeciesWithMultiplePets();
+        log.info("Species count");
+        return ResponseEntity.ok(speciesName);
+    }
+
+    @GetMapping("/pets/species-count/intersect")
+    public ResponseEntity<List<String>> getSpeciesCountIntersect(){
+        List<String> speciesName = petService.findSpeciesWithIntersect();
+        log.info("Species count");
+        return ResponseEntity.ok(speciesName);
     }
 }

@@ -13,4 +13,5 @@ public interface PetVaccineService {
     List<PetVaccine> findAll();
     void update(Long id, BasePetVaccineRequest request);
     void updateCount(Long id);
+    List<PetVaccine> getAllPetVaccinationDetails();
 }
